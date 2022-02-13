@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San pham</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <style>
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .container{
+            margin: 0px auto;
+            width: 75%;
+        }
+
+        .input-product{
+            border: 1px solid #5999ff;
+        }
+
+        .input-product h3{
+            background-color: #5999ff;
+            color: #fff;
+            margin: 0px auto;
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body ng-controller="myCtrl">
+    <div class="container">
+        <div class="input-product">
+            <h3>Input product's detall information</h3>
+            <form>
+                <label>Manufacturer Name:</label>
+                <select>
+                    <option>---Select---</option>
+                    <option>Apple</option>
+                    <option>Sam Sung</option>
+                    <option>LG</option>
+                    <option>Sony</option>
+                    <option>Google</option>
+                </select>
+                <label>Category Name:</label>
+            </form>
+        </div>
+        <div class="management-ptoducts"></div>
+    </div>
+</body>
+</html>

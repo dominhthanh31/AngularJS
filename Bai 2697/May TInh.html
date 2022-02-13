@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Calculator Online</title>
+
+	<!-- Bootstrap -> thiet ke GUI -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<!-- AngularJS -> framework (js) -> duoc viet bang js (library js) -> file .js -> nhung cdn vao web -->
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+</head>
+<body ng-controller="MyController">
+<div class="container">
+	<div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-7">
+			<input type="text" name="result" class="form-control" style="height: 60px; border: solid grey 2px;" ng-model="result">
+		</div>
+		<div class="col-md-3"></div>
+	</div>
+	<div class="row" style="margin-top: 10px;">
+		<div class="col-md-1" ng-repeat="k in buttonList track by $index">
+			<button class="btn btn-default" style="width: 100%; height: 55px; padding: 6px; margin-bottom: 10px; border-radius: 0px; border: solid grey 2px;" ng-if="k != '' && k != '='" ng-click="pressKey($event)" data = '{{ k }}'>{{ k }}</button>
+			<button class="btn btn-info" style="width: 100%; height: 55px; padding: 6px; margin-bottom: 10px; border-radius: 0px; border: solid #0dcaf0 2px;" ng-if="k == '='" ng-click="pressKey($event)" data = '{{ k }}'>{{ k }}</button>
+		</div>
+	</div>
+</div>
+
+//Them the script vao day
+	var app = angular.module('MyApp', [])
+
+	app.controller('MyController', ['$scope', function ($scope) {
+		$scope.x = ''
+		$scope.y = ''
+		$scope.cal = ''
+		$scope.s = ''
+		$scope.result = ''
+
+		$scope.buttonList = [
+			'', '', 'Rad', 'Deg', 'x!', '(', ')', '%', 'AC', '', '', '',
+			'', '', 'Inv', 'sin', 'ln', '7', '8', '9', '/', '', '', '',
+			'', '', 'U', 'cos', 'log', '4', '5', '6', '*', '', '', '',
+			'', '', 'e', 'tag', 'sqrt', '1', '2', '3', '-', '', '', '',
+			'', '', 'Ans', 'EXP', 'pow', '0', '.', '=', '+', '', '', ''
+		]
+
+		$scope.pressKey = function(e) {
+			var v = $(e.currentTarget).attr("data") //jQuery
+			switch(v) {
+				case '+':
+				case '-':
+				case '*':
+				case '/':
+					$scope.cal = v
+				break;
+				case '0':
+				case '1':
+				case '2':
+				case '3':
+				case '4':
+				case '5':
+				case '6':
+				case '7':
+				case '8':
+				case '9':
+				case '.':
+					if($scope.cal != '') {
+						$scope.y += v
+					} else {
+						$scope.x += v
+					}
+				break;
+				case '=':
+					switch($scope.cal) {
+						case '+':
+							$scope.s = parseFloat($scope.x) + parseFloat($scope.y)
+						break;
+						case '-':
+							$scope.s = parseFloat($scope.x) - parseFloat($scope.y)
+						break;
+						case '*':
+							$scope.s = parseFloat($scope.x) * parseFloat($scope.y)
+						break;
+						case '/':
+							$scope.s = parseFloat($scope.x) / parseFloat($scope.y)
+						break;
+					}
+				break;
+				case 'AC':
+					$scope.x = ''
+					$scope.y = ''
+					$scope.cal = ''
+					$scope.s = ''
+					$scope.result = ''
+				break;
+			}
+
+			if($scope.s != '') {
+				$scope.result = $scope.x + $scope.cal + $scope.y + '=' + $scope.s
+			} else {
+				$scope.result = $scope.x + $scope.cal + $scope.y
+			}
+		}
+	}])
+//Them the dong vao day
+</body>
+</html>
