@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Bootstrap -> thiet ke GUI -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+	<!-- AngularJS -> framework (js) -> duoc viet bang js (library js) -> file .js -> nhung cdn vao web -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+
+    <style>
+        .container .management h2{
+            text-align: center;
+            margin: 20px;
+        }
+
+        .form-group{
+            margin: 5px;
+        }
+
+    </style>
+</head>
+<body ng-controller="myCtrl">
+    <div class="container">
+        <div class="management">
+            <h2>Student Management</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label>Student Name: </label>
+                    <input required type="text" placeholder="Enter name" class="form-group" ng-model="name">
+                </div>
+                <div class="form-group">
+                    <label>Student DOB: </label>
+                    <input type="date" class="form-group" ng-model="dob">
+                </div>
+                <div class="form-group">
+                    <label>Student Gender: </label>
+                    <input type="radio" name="gender" class="form-group" value="Male" ng-model="gender">Male
+                    <input type="radio" name="gender" class="form-group" value="Female" ng-model="gender">Female
+                </div>
+                <div class="form-group">
+                    <label>Student Language: </label>
+                    <input type="checkbox" name="lg1" class="form-group" value="English">English
+                    <input type="checkbox" name="lg1" class="form-group" value="Vietnamese">Vietnamese
+                    <input type="checkbox" name="lg1" class="form-group" value="Japanese">Japanese
+                    <input type="checkbox" name="lg1" class="form-group" value="Chinese">Chinese
+                    <input type="checkbox" name="lg1" class="form-group" value="French">French
+                </div>
+                <div class="form-group">
+                    <label>Student Class: </label>
+                    <select ng-model="class">
+                        <option ng-repeat="cl in classList" value="{{cl}}"> {{cl}} </option>
+                    </select>
+                    <button class="btn" ng-click="addClass()">Add Class</button>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success" ng-click="addUser()">Add</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="list">
+            <h2>Student List</h2>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Class</th>
+                        <th>DOB</th>
+                        <th>Gender</th>
+                        <th>Language</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="student in dataList">
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.class }}</td>
+                        <td>{{ student.dob | date : "dd/MM/yyyy" }}</td>
+                        <td>{{ student.gender }}</td>
+                        <td>{{ student.language }}</td>
+                        <td><button ng-click="delete($index)" class="btn btn-warning">Remove</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<script>
+    var app = angular.module("myApp",[])
+    app.controller('myCtrl',function($scope){
+        $scope.dataList = []
+
+        $scope.classList = ["C2108G1","C2108G2","C2108G3"]
+        $scope.addClass = function(){
+            var classInput = prompt("Input class",'')
+            this.classList[this.classList.length] = classInput
+        }
+
+        $scope.addUser = function(){
+            var language = document.querySelectorAll("input[type=checkbox]:checked");
+            var languageList = []
+            for(var i=0; i<language.length; i++){
+                languageList[languageList.length] = language[i].value
+            }
+
+            var student = {
+            "name" : this.name,
+            "dob" : this.dob,
+            "gender" : this.gender,
+            "language" : languageList.join(),
+            "class" : this.class
+            }
+            this.dataList[this.dataList.length] = student
+        }
+
+        $scope.delete = function(index){
+            $scope.dataList.splice(index,1)
+        }
+    })
+</script>
+</body>
+</html>
