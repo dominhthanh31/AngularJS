@@ -80,7 +80,7 @@
                         <td> {{ student.fullname }} </td>
                         <td> {{ student.age }} </td>
                         <td> {{ student.address }} </td>
-                        <td><button ng-click="delete($index)">Remove</button></td>
+                        <td><button class="btn btn-danger" ng-click="delete($index)">Remove</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -95,7 +95,7 @@
             <br>
             <input placeholder="Enter address" type="text" size="50px" ng-model="address">
             <br>
-            <button class="btn" ng-click="save()">Save</button>
+            <button class="btn btn-success" style="color: black;" ng-click="save()">Save</button>
         </div>
     </div>
 </div>
